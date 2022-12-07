@@ -110,7 +110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5408505241044031648
 Transform:
   m_ObjectHideFlags: 0
@@ -224,6 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59320826d9f3b6a49a0d99cd8fb98f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceNumber: 0
+  currentPlatform: 0
+  finishPlatform: 0
   playerName: 
 --- !u!54 &8686125750222096967
 Rigidbody:
@@ -267,7 +270,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dafd908fa7ea904a96a9ab88d0db615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceNumber: 0
+  currentPlatform: 0
+  finishPlatform: 0
   playerName: 
   playerSpeed: 0.5
   movePoint: {fileID: 5408505241044031648}
   gameMoves: {fileID: 0}
+  isRollDice: 0
+  playerState: 0

@@ -21,6 +21,11 @@ namespace Game
             [SerializeField]
             private int a;
 
+            private void Start()
+            {
+                GlobalUIEventManager.OnButtonRollDiceClick += RollDiceClick;
+            }
+
             public void StartMove(GameObject[] players, Transform[] platforms)
             {
                 playerMoves = new MovementPlayer[players.Length];
@@ -35,6 +40,11 @@ namespace Game
                 this.platforms = platforms;
 
                 StartCoroutine(Gameplay());
+            }
+
+            private void RollDiceClick()
+            {
+
             }
 
             public void CompletePlayerMove()
@@ -58,6 +68,11 @@ namespace Game
                     }
                     a++;
                 }
+            }
+
+            private void OnDisable()
+            {
+                GlobalUIEventManager.OnButtonRollDiceClick -= RollDiceClick;
             }
         }
     }

@@ -77,7 +77,7 @@ namespace Game
 
             private IEnumerator BuildPath()
             {
-                for (int i = 0; i < spawnPoitns.Length; i++)
+                for (int i = 1; i < spawnPoitns.Length; i++)
                 {
                     if (ComparsionPlatforms(i))
                     {
@@ -107,10 +107,7 @@ namespace Game
 
                 allPlatforms[numberSpawnPointPlatform] = platformClone;
 
-                numberSpawnPointPlatform++;
-
                 platformTextMesh.text = numberSpawnPointPlatform.ToString();
-
             }
 
             private void NumberingSpecialPlatforms()

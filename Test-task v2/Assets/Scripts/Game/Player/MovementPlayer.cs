@@ -30,9 +30,16 @@ namespace Game
             {
                 idle,
                 moving,
-                movingBack,
                 landed
             }
+
+            public enum MoveDirection 
+            { 
+                forward,
+                back
+            }
+
+            private MoveDirection moveDirection;
 
             [SerializeField]
             private PlayerState playerState;
@@ -56,78 +63,73 @@ namespace Game
             {
                 isRollDice = false;
 
+                //yield return new WaitForSeconds(0.01f);
+
                 yield return new WaitUntil(() => isRollDice == true);
 
                 diceNumber = Random.Range(1, 7);
 
-                CalculatingPath();
+                CalculatingPath(diceNumber);
             }
 
-            private void CalculatingPath()
+            private void CalculatingPath(int additionalNumber)
             {
                 Debug.Log(diceNumber);
 
-                finishPlatform = currentPlatform + diceNumber;
+                finishPlatform = currentPlatform + additionalNumber;
+
+                if (finishPlatform < currentPlatform)
+                {
+                    moveDirection = MoveDirection.back;
+                }
+                else if (finishPlatform > currentPlatform)
+                {
+                    moveDirection = MoveDirection.forward;
+                }
 
                 playerState = PlayerState.moving;
-            }
-
-            private void Back()
-            {
-                currentPlatform--;
-
-                finishPlatform = currentPlatform - 3;
-
-                playerState = PlayerState.movingBack;
             }
 
             private void Update()
             {
                 if (playerState == PlayerState.moving)
                 {
-                    PlayerMovingForward();
-                }
-                else if (playerState == PlayerState.movingBack)
-                {
-                    PlayerMovingBack();
-                }
-            }
-
-            private void PlayerMovingBack()
-            {
-                if (currentPlatform == finishPlatform)
-                {
-                    playerState = PlayerState.landed;
-
-                    gameMoves.CompletePlayerMove();
-                }
-                else
-                {
-                    movePoint.position = Vector3.MoveTowards(movePoint.position, platforms[currentPlatform].position,
-                        playerSpeed * Time.deltaTime);
-
-                    if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
+                    if (Vector3.Distance(movePoint.position, platforms[finishPlatform].position) < minDistance)
                     {
-                        currentPlatform--;
+                        playerState = PlayerState.landed;
+                    }
+                    else
+                    {
+                        movePoint.position = Vector3.MoveTowards(movePoint.position, platforms[currentPlatform].position, playerSpeed * Time.deltaTime);
+
+                        if (moveDirection == MoveDirection.forward)
+                        {
+                            PlayerMovingForward();
+                        }
+                        else if (moveDirection == MoveDirection.back)
+                        {
+                            PlayerMovingBack();
+                        }
                     }
                 }
             }
 
             private void PlayerMovingForward()
             {
-                if (currentPlatform == finishPlatform)
+                if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
                 {
-                    playerState = PlayerState.landed;
-                }
-                else
-                {
-                    movePoint.position = Vector3.MoveTowards(movePoint.position, platforms[currentPlatform].position,
-                        playerSpeed * Time.deltaTime);
-
-                    if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
+                    if (currentPlatform < finishPlatform)
                     {
                         currentPlatform++;
                     }
+                }
+            }
+
+            private void PlayerMovingBack()
+            {
+                if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
+                {
+                    currentPlatform--;
                 }
             }
 
@@ -143,9 +145,9 @@ namespace Game
                     }
                     else if (other.TryGetComponent(out PenaltyPlatform penaltyPlatform))
                     {
-                        // Debug.Log("пизедц");
-                        
-                        Back();
+                        playerState = PlayerState.idle;
+
+                        CalculatingPath(-3);
                     }
                     else if (other.TryGetComponent(out BonusPlatform bonusPlatform))
                     {
