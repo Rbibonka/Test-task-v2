@@ -7,7 +7,7 @@ namespace Game
     {
         public class GlobalEventManager
         {
-            public static Action<Transform> OnChangedTrackingTarget;
+            public static Action<Transform, Vector3> OnChangedTrackingTarget;
             public static Action OnRollDice;
             public static Action OnPlayerActivated;
             public static Action OnPathBuilt;

@@ -13,12 +13,23 @@ namespace Game
             [SerializeField]
             private int quantitySpecialPlatforms;
 
+            [SerializeField]
+            private int penaltyNumberPlatforms;
+
             [Header("Game objects")]
             [SerializeField]
             private Transform[] platformPoints;
 
             [SerializeField]
             private GameObject[] players;
+
+            public int GetPenaltyNumberPlatforms
+            {
+                get
+                {
+                    return penaltyNumberPlatforms;
+                }
+            }
 
             public GameObject[] GetPlayers
             {

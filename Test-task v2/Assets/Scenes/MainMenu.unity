@@ -368,9 +368,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1815409662}
+      - m_Target: {fileID: 1815409661}
         m_TargetAssemblyTypeName: Game.Menu.MenuManager, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -734,7 +734,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1815409663}
-  - component: {fileID: 1815409662}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -742,18 +741,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1815409662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815409661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0efc8df58a89624a8ea9d5215d8657d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1815409663
 Transform:
   m_ObjectHideFlags: 0
@@ -851,7 +838,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1815409662}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Game.Menu.MenuManager, Assembly-CSharp
         m_MethodName: ExitInGame
         m_Mode: 1

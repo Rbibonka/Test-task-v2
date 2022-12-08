@@ -9,7 +9,7 @@ TagManager:
   - Manager
   - Point
   - Start
-  - Dice
+  - Wheel
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,7 @@ namespace Game
     {
         public class Level : MonoBehaviour
         {
+            [Header("Support scripts")]
             [SerializeField]
             private LevelParameters levelParameters;
 
@@ -18,7 +19,7 @@ namespace Game
             [SerializeField]
             private GameMoves gameMoves;
 
-            private void Start()
+            private void OnEnable()
             {
                 GlobalEventManager.OnPlayerActivated += StartGame;
 

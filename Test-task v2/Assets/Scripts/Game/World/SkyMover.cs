@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class SkyMover : MonoBehaviour
 {
+    [Header("Parameters")]
+    [Range(0, 1)]
+    [SerializeField]
+    private float speed;
+
+    [Header("Game objects")]
     [SerializeField]
     private Transform[] clouds;
 
@@ -10,10 +16,6 @@ public class SkyMover : MonoBehaviour
 
     [SerializeField]
     private Transform finishPosition;
-
-    [Range(0, 1)]
-    [SerializeField]
-    private float speed;
 
     private void Update()
     {

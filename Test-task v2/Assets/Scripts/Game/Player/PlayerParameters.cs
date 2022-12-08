@@ -6,9 +6,6 @@ namespace Game
     {
         public class PlayerParameters : Player
         {
-            [SerializeField]
-            protected string playerName;
-
             public string PlayerName
             {
                 get

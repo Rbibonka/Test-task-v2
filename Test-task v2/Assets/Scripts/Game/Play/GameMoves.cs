@@ -8,22 +8,27 @@ namespace Game
         public class GameMoves : MonoBehaviour
         {
             [SerializeField]
-            private string currentPlayer;
+            private Transform wheelPoint;
 
-            private GameObject[] players;
-
-            private Transform[] platforms;
+            [SerializeField]
+            private SpinWheel spinWheel;
 
             private MovementPlayer[] playerMoves;
 
-            private bool isNextMove;
+            private bool nextMove;
 
-            [SerializeField]
-            private int a;
+            private bool finishMove;
 
-            private void Start()
+            private SpinWheel.CurrentStateWheel currentStateWheel;
+
+            private void OnEnable()
             {
-                GlobalUIEventManager.OnButtonRollDiceClick += RollDiceClick;
+                GlobalUIEventManager.OnButtonRollDiceClick += StartSpin;
+            }
+
+            private void StartSpin()
+            {
+                currentStateWheel = SpinWheel.CurrentStateWheel.rotate;
             }
 
             public void StartMove(GameObject[] players, Transform[] platforms)
@@ -34,22 +39,25 @@ namespace Game
                 {
                     playerMoves[i] = players[i].GetComponentInChildren<MovementPlayer>();
 
-                    playerMoves[i].SetPlatforms(platforms);
+                    playerMoves[i].SetPlatforms();
                 }
-
-                this.platforms = platforms;
 
                 StartCoroutine(Gameplay());
             }
 
-            private void RollDiceClick()
+            public void FinishScrollingWheel()
             {
-
+                currentStateWheel = spinWheel.GetCurrentStateWheel;
             }
 
             public void CompletePlayerMove()
             {
-                isNextMove = true;
+                nextMove = true;
+            }
+
+            public void RepeatMove()
+            {
+                finishMove = true;
             }
 
             private IEnumerator Gameplay()
@@ -58,21 +66,30 @@ namespace Game
                 {
                     foreach(var player in playerMoves)
                     {
-                        GlobalEventManager.OnChangedTrackingTarget?.Invoke(player.transform);
+                        nextMove = false;
 
-                        StartCoroutine(player.RollDice());
+                        currentStateWheel = SpinWheel.CurrentStateWheel.idle;
 
-                        yield return new WaitUntil(() => isNextMove == true);
+                        GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
 
-                        isNextMove = false;
+                        yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.rotate);
+
+                        spinWheel.StartSpin();
+
+                        yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.stopped);
+
+                        GlobalEventManager.OnChangedTrackingTarget?.Invoke(player.transform, player.GetDistanceFromPlayer);
+
+                        player.Move(spinWheel.GetQuantityMoves);
+
+                        yield return new WaitUntil(() => nextMove == true);
                     }
-                    a++;
                 }
             }
 
             private void OnDisable()
             {
-                GlobalUIEventManager.OnButtonRollDiceClick -= RollDiceClick;
+                GlobalUIEventManager.OnButtonRollDiceClick -= StartSpin;
             }
         }
     }

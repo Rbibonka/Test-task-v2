@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -8,19 +6,21 @@ namespace Game
     {
         public class FollowCamera : MonoBehaviour
         {
-            [SerializeField]
-            private Transform centerTerrainPoint;
-
+            [Header("Camera parameters")]
             [SerializeField]
             private Vector3 distanceFromTarget;
-            
-            [Range(0,5)]
+
+            [Range(0, 5)]
             [SerializeField]
             private float cameraSpeed;
 
             [Range(0, 5)]
             [SerializeField]
             private float cameraRotateSpeed;
+
+            [Header("Game object")]
+            [SerializeField]
+            private Transform centerTerrainPoint;
 
             private Transform trackingTarget;
             
@@ -31,10 +31,9 @@ namespace Game
                 playersTracking
             }
 
-            [SerializeField]
             private CameraState cameraState;
 
-            private void Awake()
+            private void OnEnable()
             {
                 GlobalEventManager.OnChangedTrackingTarget += TrackingPlayers;
 
@@ -46,8 +45,10 @@ namespace Game
                 cameraState = CameraState.terrainTracking;
             }
 
-            private void TrackingPlayers(Transform target)
+            private void TrackingPlayers(Transform target, Vector3 distance)
             {
+                distanceFromTarget = distance;
+
                 trackingTarget = target;
 
                 cameraState = CameraState.playersTracking;

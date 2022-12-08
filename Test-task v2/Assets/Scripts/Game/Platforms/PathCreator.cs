@@ -8,6 +8,7 @@ namespace Game
     {
         public class PathCreator : MonoBehaviour
         {
+            [Header("Game objects")]
             [SerializeField]
             private Transform[] spawnPoitns;
 
@@ -20,6 +21,7 @@ namespace Game
             [SerializeField]
             private Transform parent;
 
+            [Header("Path parameters")]
             [SerializeField]
             private int specialPlatformsQuantity;
 
@@ -29,8 +31,6 @@ namespace Game
             [Range(0, 1)]
             [SerializeField]
             private float timeSpawnPlatform;
-
-            private GameObject[] allPlatforms;
 
             private int[] specialPlfatforms;
 
@@ -43,8 +43,6 @@ namespace Game
                 specialPlatformsQuantity = specialPlatformsValue;
 
                 spawnPoitns = platforms;
-
-                allPlatforms = new GameObject[spawnPoitns.Length];
 
                 if (specialPlatformsQuantity < spawnPoitns.Length - firstPossibleSpecialPlatfrom)
                 {
@@ -104,8 +102,6 @@ namespace Game
                 var platformTextMesh = platformClone.GetComponentInChildren<TextMeshPro>();
 
                 platformTextMesh.color = Random.ColorHSV();
-
-                allPlatforms[numberSpawnPointPlatform] = platformClone;
 
                 platformTextMesh.text = numberSpawnPointPlatform.ToString();
             }

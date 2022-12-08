@@ -6,18 +6,11 @@ namespace Game
     {
         public abstract class Player : MonoBehaviour
         {
+            protected string playerName;
+
             protected int numberMotion;
 
-            [SerializeField]
-            protected int diceNumber;
-
             protected int playerId;
-
-            [SerializeField]
-            protected int currentPlatform;
-
-            [SerializeField]
-            protected int finishPlatform;
         }
     }
 }

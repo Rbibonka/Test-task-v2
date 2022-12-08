@@ -9,22 +9,38 @@ namespace Game
         [RequireComponent(typeof(MeshCollider))]
         public class MovementPlayer : PlayerParameters
         {
+            [Header("Parameters player")]
             [Range(0, 3)]
             [SerializeField]
             private float playerSpeed;
 
             [SerializeField]
-            private Transform movePoint;
+            private int currentPlatform;
 
             [SerializeField]
+            private int finishPlatform;
+
+            private Vector3 distanceFromPlayer;
+
+            [Header("Game object")]
+            [SerializeField]
+            private Transform movePoint;
+
+            [Header("Supprot scripts")]
+            [SerializeField]
             private GameMoves gameMoves;
+
+            [SerializeField]
+            private LevelParameters levelParameters;
 
             private Transform[] platforms;
 
             private float minDistance = 0.001f;
 
-            [SerializeField]
-            private bool isRollDice = false;
+            private void Start()
+            {
+                distanceFromPlayer = new Vector3(0.7f, 0.5f, 0f);
+            }
 
             public enum PlayerState
             {
@@ -41,48 +57,30 @@ namespace Game
 
             private MoveDirection moveDirection;
 
-            [SerializeField]
             private PlayerState playerState;
 
-            private void Start()
+            public Vector3 GetDistanceFromPlayer
             {
-                GlobalUIEventManager.OnButtonRollDiceClick += RollDiceClick;
+                get
+                {
+                    return distanceFromPlayer;
+                }
             }
 
-            public void SetPlatforms(Transform[] platforms)
+            public void SetPlatforms()
             {
-                this.platforms = platforms;
+                platforms = levelParameters.GetPlatfromPoints;
             }
 
-            private void RollDiceClick()
+            public void Move(int quantityMoves)
             {
-                isRollDice = true;
-            }
+                finishPlatform = currentPlatform + quantityMoves;
 
-            public IEnumerator RollDice()
-            {
-                isRollDice = false;
-
-                //yield return new WaitForSeconds(0.01f);
-
-                yield return new WaitUntil(() => isRollDice == true);
-
-                diceNumber = Random.Range(1, 7);
-
-                CalculatingPath(diceNumber);
-            }
-
-            private void CalculatingPath(int additionalNumber)
-            {
-                Debug.Log(diceNumber);
-
-                finishPlatform = currentPlatform + additionalNumber;
-
-                if (finishPlatform < currentPlatform)
+                if (quantityMoves < 0)
                 {
                     moveDirection = MoveDirection.back;
                 }
-                else if (finishPlatform > currentPlatform)
+                else
                 {
                     moveDirection = MoveDirection.forward;
                 }
@@ -129,8 +127,18 @@ namespace Game
             {
                 if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
                 {
-                    currentPlatform--;
+                    if (currentPlatform > finishPlatform)
+                    {
+                        currentPlatform--;
+                    }
                 }
+            }
+
+            private IEnumerator Delay()
+            {
+                yield return new WaitForSeconds(1f);
+
+                Move(levelParameters.GetPenaltyNumberPlatforms);
             }
 
             private void OnTriggerStay(Collider other)
@@ -142,22 +150,20 @@ namespace Game
                         playerState = PlayerState.idle;
 
                         gameMoves.CompletePlayerMove();
+
+                        //gameMoves.RepeatMove();
                     }
                     else if (other.TryGetComponent(out PenaltyPlatform penaltyPlatform))
                     {
                         playerState = PlayerState.idle;
 
-                        CalculatingPath(-3);
+                        StartCoroutine(Delay());
                     }
                     else if (other.TryGetComponent(out BonusPlatform bonusPlatform))
                     {
-                        StartCoroutine(RollDice());
+                        //gameMoves.RepeatMove();
                     }
                 }
-            }
-            private void OnDisable()
-            {
-                GlobalUIEventManager.OnButtonRollDiceClick -= RollDiceClick;
             }
         }
     }
