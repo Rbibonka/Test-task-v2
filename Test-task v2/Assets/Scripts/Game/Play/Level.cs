@@ -40,7 +40,7 @@ namespace Game
 
             private void StartGame()
             {
-                gameMoves.StartMove(playersActivator.GetPlayers, levelParameters.GetPlatfromPoints);
+                gameMoves.StartMove(playersActivator.GetPlayers);
             }
 
             private void OnDisable()

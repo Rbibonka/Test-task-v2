@@ -7107,14 +7107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eebe7a4635b462648b10c4b23eb07d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoitns: []
   simplePlatform: {fileID: 5443985589407207607, guid: ca08990a2c9a8ea4787467f2c8267e79, type: 3}
   specialPlatform:
   - {fileID: 5443985589407207607, guid: 2845228cb3ec6be47a2d121ab8b16ad5, type: 3}
   - {fileID: 5443985589407207607, guid: 0fde668a254edd2479aea8c2390c68c5, type: 3}
   parent: {fileID: 1557557035}
   specialPlatformsQuantity: 0
-  firstPossibleSpecialPlatfrom: 4
   timeSpawnPlatform: 0.15
 --- !u!4 &2125316593
 Transform:

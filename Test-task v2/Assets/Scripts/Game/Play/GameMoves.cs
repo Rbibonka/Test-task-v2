@@ -15,7 +15,13 @@ namespace Game
 
             private MovementPlayer[] movementPlayer;
 
-            private int playersLeft;
+            private int[] finishers;
+
+            private int numberFinishers;
+
+            private bool somePlayerFinished;
+
+            private bool playerAdded;
 
             private bool endMove;
 
@@ -39,11 +45,18 @@ namespace Game
                 currentStateWheel = SpinWheel.CurrentStateWheel.rotate;
             }
 
-            public void StartMove(GameObject[] players, Transform[] platforms)
+            public void StartMove(GameObject[] players)
+            {
+                SetParameters(players);
+
+                StartCoroutine(Gameplay());
+            }
+
+            private void SetParameters(GameObject[] players)
             {
                 movementPlayer = new MovementPlayer[players.Length];
 
-                playersLeft = players.Length;
+                finishers = new int[players.Length];
 
                 for (int i = 0; i < players.Length; i++)
                 {
@@ -51,8 +64,6 @@ namespace Game
 
                     movementPlayer[i].SetPlatforms();
                 }
-
-                StartCoroutine(Gameplay());
             }
 
             public void FinishSpinWheel()
@@ -65,7 +76,7 @@ namespace Game
                 endMove = true;
             }
 
-            public void RepeatMove()
+            public void RepeatPlayerMove()
             {
                 moveStatus = MoveStatus.repeatMove;
                 endMove = true;
@@ -75,24 +86,23 @@ namespace Game
             {
                 while (true)
                 {
-                    foreach(var player in movementPlayer)
+                    for(int i = 0; i < movementPlayer.Length; i++)
                     {
                         do
                         {
-                            moveStatus = MoveStatus.finishMove;
-
-                            endMove = false;
-
-                            currentStateWheel = SpinWheel.CurrentStateWheel.idle;
-
-                            if (player.GetPlayerFinished)
+                            if (movementPlayer[i].GetPlayerFinished)
                             {
-
                                 break;
                             }
                             else
                             {
-                                GlobalUIEventManager.OnChangePlayer?.Invoke(player.GetPlayerParameters.GetPlayerName, player.GetCurrentPlatform);
+                                moveStatus = MoveStatus.finishMove;
+
+                                endMove = false;
+
+                                currentStateWheel = SpinWheel.CurrentStateWheel.idle;
+
+                                GlobalUIEventManager.OnChangePlayer?.Invoke(movementPlayer[i].GetPlayerParameters.GetPlayerName, movementPlayer[i].GetCurrentPlatform);
 
                                 GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
 
@@ -104,18 +114,23 @@ namespace Game
 
                                 GlobalUIEventManager.OnChangeNumberFromWheel?.Invoke(spinWheel.GetQuantityMoves);
 
-                                GlobalEventManager.OnChangedTrackingTarget?.Invoke(player.transform, player.GetDistanceFromPlayer);
+                                GlobalEventManager.OnChangedTrackingTarget?.Invoke(movementPlayer[i].transform, movementPlayer[i].GetDistanceFromPlayer);
 
                                 yield return new WaitForSeconds(2f);
 
-                                player.Move(spinWheel.GetQuantityMoves);
+                                movementPlayer[i].Move(spinWheel.GetQuantityMoves);
 
                                 yield return new WaitUntil(() => endMove == true);
                             }
-                            
+
                         } while (moveStatus == MoveStatus.repeatMove);
                     }
                 }
+            }
+
+            private void AddedFinisher()
+            {
+
             }
 
             private void OnDisable()

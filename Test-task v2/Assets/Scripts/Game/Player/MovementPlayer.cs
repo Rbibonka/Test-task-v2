@@ -211,7 +211,7 @@ namespace Game
 
                         playerMoves++;
 
-                        gameMoves.RepeatMove();
+                        gameMoves.RepeatPlayerMove();
                     }
                 }
             }

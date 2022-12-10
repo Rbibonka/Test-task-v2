@@ -7,6 +7,7 @@ namespace Game
     {
         public class GameCanvas : MonoBehaviour
         {
+            [Header("UI elements")]
             [SerializeField]
             private Text currentPlatform;
 

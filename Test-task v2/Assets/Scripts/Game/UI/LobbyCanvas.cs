@@ -8,7 +8,7 @@ namespace Game
     {
         public class LobbyCanvas : MonoBehaviour
         {
-            [Header("UI")]
+            [Header("UI elements")]
             [SerializeField]
             private InputField quantityPlayersInptFd;
 
