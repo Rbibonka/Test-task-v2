@@ -13,13 +13,21 @@ namespace Game
             [SerializeField]
             private SpinWheel spinWheel;
 
-            private MovementPlayer[] playerMoves;
+            private MovementPlayer[] movementPlayer;
 
-            private bool nextMove;
+            private int playersLeft;
 
-            private bool finishMove;
+            private bool endMove;
 
             private SpinWheel.CurrentStateWheel currentStateWheel;
+
+            public enum MoveStatus
+            {
+                finishMove,
+                repeatMove
+            }
+
+            private MoveStatus moveStatus;
 
             private void OnEnable()
             {
@@ -33,56 +41,79 @@ namespace Game
 
             public void StartMove(GameObject[] players, Transform[] platforms)
             {
-                playerMoves = new MovementPlayer[players.Length];
+                movementPlayer = new MovementPlayer[players.Length];
+
+                playersLeft = players.Length;
 
                 for (int i = 0; i < players.Length; i++)
                 {
-                    playerMoves[i] = players[i].GetComponentInChildren<MovementPlayer>();
+                    movementPlayer[i] = players[i].GetComponentInChildren<MovementPlayer>();
 
-                    playerMoves[i].SetPlatforms();
+                    movementPlayer[i].SetPlatforms();
                 }
 
                 StartCoroutine(Gameplay());
             }
 
-            public void FinishScrollingWheel()
+            public void FinishSpinWheel()
             {
                 currentStateWheel = spinWheel.GetCurrentStateWheel;
             }
 
             public void CompletePlayerMove()
             {
-                nextMove = true;
+                endMove = true;
             }
 
             public void RepeatMove()
             {
-                finishMove = true;
+                moveStatus = MoveStatus.repeatMove;
+                endMove = true;
             }
 
             private IEnumerator Gameplay()
             {
                 while (true)
                 {
-                    foreach(var player in playerMoves)
+                    foreach(var player in movementPlayer)
                     {
-                        nextMove = false;
+                        do
+                        {
+                            moveStatus = MoveStatus.finishMove;
 
-                        currentStateWheel = SpinWheel.CurrentStateWheel.idle;
+                            endMove = false;
 
-                        GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
+                            currentStateWheel = SpinWheel.CurrentStateWheel.idle;
 
-                        yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.rotate);
+                            if (player.GetPlayerFinished)
+                            {
 
-                        spinWheel.StartSpin();
+                                break;
+                            }
+                            else
+                            {
+                                GlobalUIEventManager.OnChangePlayer?.Invoke(player.GetPlayerParameters.GetPlayerName, player.GetCurrentPlatform);
 
-                        yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.stopped);
+                                GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
 
-                        GlobalEventManager.OnChangedTrackingTarget?.Invoke(player.transform, player.GetDistanceFromPlayer);
+                                yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.rotate);
 
-                        player.Move(spinWheel.GetQuantityMoves);
+                                spinWheel.StartSpin();
 
-                        yield return new WaitUntil(() => nextMove == true);
+                                yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.stopped);
+
+                                GlobalUIEventManager.OnChangeNumberFromWheel?.Invoke(spinWheel.GetQuantityMoves);
+
+                                GlobalEventManager.OnChangedTrackingTarget?.Invoke(player.transform, player.GetDistanceFromPlayer);
+
+                                yield return new WaitForSeconds(2f);
+
+                                player.Move(spinWheel.GetQuantityMoves);
+
+                                yield return new WaitUntil(() => endMove == true);
+                            }
+                            
+                        } while (moveStatus == MoveStatus.repeatMove);
                     }
                 }
             }

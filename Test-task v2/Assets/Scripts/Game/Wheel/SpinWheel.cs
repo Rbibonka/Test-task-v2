@@ -10,13 +10,17 @@ namespace Game
         [RequireComponent(typeof(Rigidbody))]
         public class SpinWheel : Wheel
         {
-            [Range(0,100)]
-            [SerializeField]
-            private float rotateSpeed;
-
             [Range(0, 10)]
             [SerializeField]
             private float defaultSpeed;
+
+            [Range(0, 0.9f)]
+            [SerializeField]
+            private float minAngularDrag;
+
+            [Range(0.1f, 1f)]
+            [SerializeField]
+            private float maxAngularDrag;
 
             [SerializeField]
             private Vector3 distanceFromWheel;
@@ -26,6 +30,8 @@ namespace Game
 
             [SerializeField]
             private GameMoves gameMoves;
+
+            private float rotateSpeed;
 
             private float maxRotateVelocity = 6f;
 
@@ -72,7 +78,7 @@ namespace Game
 
             public void StartSpin()
             {
-                wheelBody.angularDrag = Random.Range(0.2f, 1f);
+                wheelBody.angularDrag = Random.Range(minAngularDrag, maxAngularDrag);
 
                 rotateSpeed = Random.Range(-100, 100);
 
@@ -102,7 +108,7 @@ namespace Game
 
                     currentStateWheel = CurrentStateWheel.stopped;
 
-                    gameMoves.FinishScrollingWheel();
+                    gameMoves.FinishSpinWheel();
 
                     currentStateWheel = CurrentStateWheel.idle;
                 }

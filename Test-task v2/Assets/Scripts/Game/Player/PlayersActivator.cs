@@ -24,7 +24,7 @@ namespace Game
                 {
                     players[i].SetActive(true);
 
-                    players[i].GetComponentInChildren<PlayerParameters>().SettingParameters(i);
+                    players[i].GetComponentInChildren<PlayerParameters>().SetPlayerName(i);
 
                     activePlayers[i] = players[i];
                 }

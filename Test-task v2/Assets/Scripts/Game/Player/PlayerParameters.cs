@@ -4,9 +4,13 @@ namespace Game
 {
     namespace Play
     {
-        public class PlayerParameters : Player
+        public class PlayerParameters : Statistics
         {
-            public string PlayerName
+            private int playerId;
+
+            private string playerName;
+
+            public string GetPlayerName
             {
                 get
                 {
@@ -14,7 +18,31 @@ namespace Game
                 }
             }
 
-            public void SettingParameters(int numberPlayer)
+            public int GetQuantityReceivedBonus
+            {
+                get
+                {
+                    return quantityPlayerReceivedBonus;
+                }
+            }
+
+            public int GetQuantityPlayerReceivedBonus
+            {
+                get
+                {
+                    return quantityPlayerReceivedPenalty;
+                }
+            }
+
+            public int GetQuantityMoves
+            {
+                get
+                {
+                    return quantityPlayerMoves;
+                }
+            }
+
+            public void SetPlayerName(int numberPlayer)
             {
                 var randomColor = Random.ColorHSV();
 
@@ -31,6 +59,15 @@ namespace Game
                 playerName = playerText.text;
 
                 playerText.color = randomColor;
+            }
+
+            public void SetPlayerStatistics(int quantityReceivedBonus, int quantityReceivedPenalty, int quantityMoves)
+            {
+                quantityPlayerReceivedBonus = quantityReceivedBonus;
+
+                quantityPlayerReceivedPenalty = quantityReceivedPenalty;
+
+                quantityPlayerMoves = quantityMoves;
             }
         }
     }

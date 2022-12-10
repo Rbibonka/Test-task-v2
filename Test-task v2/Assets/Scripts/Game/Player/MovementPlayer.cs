@@ -7,7 +7,8 @@ namespace Game
     {
         [RequireComponent(typeof(Rigidbody))]
         [RequireComponent(typeof(MeshCollider))]
-        public class MovementPlayer : PlayerParameters
+        [RequireComponent(typeof(PlayerParameters))]
+        public class MovementPlayer : Player
         {
             [Header("Parameters player")]
             [Range(0, 3)]
@@ -20,6 +21,7 @@ namespace Game
             [SerializeField]
             private int finishPlatform;
 
+            [SerializeField]
             private Vector3 distanceFromPlayer;
 
             [Header("Game object")]
@@ -33,14 +35,13 @@ namespace Game
             [SerializeField]
             private LevelParameters levelParameters;
 
+            private PlayerParameters playerParameters;
+
             private Transform[] platforms;
 
             private float minDistance = 0.001f;
 
-            private void Start()
-            {
-                distanceFromPlayer = new Vector3(0.7f, 0.5f, 0f);
-            }
+            private bool playerFinished;
 
             public enum PlayerState
             {
@@ -59,12 +60,41 @@ namespace Game
 
             private PlayerState playerState;
 
+            public int GetCurrentPlatform
+            {
+                get
+                {
+                    return currentPlatform;
+                }
+            }
+
+            public PlayerParameters GetPlayerParameters
+            {
+                get
+                {
+                    return playerParameters;
+                }
+            }
+
+            public bool GetPlayerFinished
+            {
+                get
+                {
+                    return playerFinished;
+                }
+            }
+
             public Vector3 GetDistanceFromPlayer
             {
                 get
                 {
                     return distanceFromPlayer;
                 }
+            }
+
+            private void OnEnable()
+            {
+                playerParameters = GetComponent<PlayerParameters>();
             }
 
             public void SetPlatforms()
@@ -75,6 +105,11 @@ namespace Game
             public void Move(int quantityMoves)
             {
                 finishPlatform = currentPlatform + quantityMoves;
+
+                if (finishPlatform > platforms.Length)
+                {
+                    finishPlatform = platforms.Length - 1;
+                }
 
                 if (quantityMoves < 0)
                 {
@@ -112,7 +147,7 @@ namespace Game
                 }
             }
 
-            private void PlayerMovingForward()
+            protected override void PlayerMovingForward()
             {
                 if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
                 {
@@ -120,10 +155,16 @@ namespace Game
                     {
                         currentPlatform++;
                     }
+                    else if (currentPlatform >= platforms.Length - 1)
+                    {
+                        SetPlayerStatistick();
+
+                        playerFinished = true;
+                    }
                 }
             }
 
-            private void PlayerMovingBack()
+            protected override void PlayerMovingBack()
             {
                 if (Vector3.Distance(movePoint.position, platforms[currentPlatform].position) < minDistance)
                 {
@@ -141,27 +182,36 @@ namespace Game
                 Move(levelParameters.GetPenaltyNumberPlatforms);
             }
 
+            private void SetPlayerStatistick()
+            {
+                playerParameters.SetPlayerStatistics(playerReceivedBonus, playerReceivedPenalty, playerMoves);
+            }
+
             private void OnTriggerStay(Collider other)
             {
                 if (playerState == PlayerState.landed)
                 {
+                    playerState = PlayerState.idle;
+
                     if (other.TryGetComponent(out DefaultPlatform defaultPlatform))
                     {
-                        playerState = PlayerState.idle;
+                        playerMoves++;
 
                         gameMoves.CompletePlayerMove();
-
-                        //gameMoves.RepeatMove();
                     }
                     else if (other.TryGetComponent(out PenaltyPlatform penaltyPlatform))
                     {
-                        playerState = PlayerState.idle;
+                        playerReceivedPenalty++;
 
                         StartCoroutine(Delay());
                     }
                     else if (other.TryGetComponent(out BonusPlatform bonusPlatform))
                     {
-                        //gameMoves.RepeatMove();
+                        playerReceivedBonus++;
+
+                        playerMoves++;
+
+                        gameMoves.RepeatMove();
                     }
                 }
             }

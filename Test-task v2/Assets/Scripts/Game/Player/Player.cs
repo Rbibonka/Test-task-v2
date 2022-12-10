@@ -6,11 +6,15 @@ namespace Game
     {
         public abstract class Player : MonoBehaviour
         {
-            protected string playerName;
+            protected int playerMoves;
 
-            protected int numberMotion;
+            protected int playerReceivedBonus;
 
-            protected int playerId;
+            protected int playerReceivedPenalty;
+
+            protected abstract void PlayerMovingForward();
+
+            protected abstract void PlayerMovingBack();
         }
     }
 }

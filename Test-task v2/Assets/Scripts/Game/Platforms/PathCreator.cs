@@ -9,8 +9,7 @@ namespace Game
         public class PathCreator : MonoBehaviour
         {
             [Header("Game objects")]
-            [SerializeField]
-            private Transform[] spawnPoitns;
+            
 
             [SerializeField]
             private GameObject simplePlatform;
@@ -25,12 +24,13 @@ namespace Game
             [SerializeField]
             private int specialPlatformsQuantity;
 
-            [SerializeField]
-            private int firstPossibleSpecialPlatfrom;
-
             [Range(0, 1)]
             [SerializeField]
             private float timeSpawnPlatform;
+
+            private Transform[] spawnPoitns;
+
+            private int firstPossibleSpecialPlatfrom;
 
             private int[] specialPlfatforms;
 
@@ -108,7 +108,7 @@ namespace Game
 
             private void NumberingSpecialPlatforms()
             {
-                int maxQuantitySpecialPlatforms = spawnPoitns.Length;
+                int maxQuantitySpecialPlatforms = spawnPoitns.Length - 1;
 
                 specialPlfatforms = new int[specialPlatformsQuantity];
 
