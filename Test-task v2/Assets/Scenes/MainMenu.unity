@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 53094643}
   m_Layer: 5
   m_Name: MenuCanvas
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 199256907}
   m_Layer: 0
   m_Name: Wheel
-  m_TagString: Wheel
+  m_TagString: Decorating
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1699,7 +1699,7 @@ GameObject:
   - component: {fileID: 449908644}
   m_Layer: 7
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Decorating
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2429,7 +2429,7 @@ GameObject:
   - component: {fileID: 891435966}
   m_Layer: 6
   m_Name: Sky
-  m_TagString: Untagged
+  m_TagString: Decorating
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5844,7 +5844,7 @@ GameObject:
   - component: {fileID: 1984310829}
   m_Layer: 0
   m_Name: Landscape
-  m_TagString: Untagged
+  m_TagString: Decorating
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

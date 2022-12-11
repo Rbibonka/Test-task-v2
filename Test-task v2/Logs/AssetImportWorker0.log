@@ -208,3 +208,41 @@ Received Import Request.
 Start importing ProjectSettings/TagManager.asset using Guid(00000000000000003000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ae6985ade2caea516dc0aae4ecd7392') in 0.027395 seconds 
   Import took 0.030620 seconds .
 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 2.98 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 12 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 61.1 MB.
+System memory in use after: 61.2 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 2011.
+Total: 3.343500 ms (FindLiveObjects: 0.134900 ms CreateObjectMapping: 0.053200 ms MarkObjects: 3.137300 ms  DeleteObjects: 0.016900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 129.183851 seconds.
+  path: Assets/Scenes/MainMenu.unity
+  artifactKey: Guid(5ab50e5d9082fe84f8a75c457bc1af37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/MainMenu.unity using Guid(5ab50e5d9082fe84f8a75c457bc1af37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71a6933f32ce6c0415be875502a0606b') in 0.012119 seconds 
+  Import took 0.015119 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 58.229502 seconds.
+  path: Assets/Scenes/Game.unity
+  artifactKey: Guid(5d9c07a09485c234890f810617e31f51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Game.unity using Guid(5d9c07a09485c234890f810617e31f51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8a2d89c386ff7dca6ac5a37e6995c67') in 0.009681 seconds 
+  Import took 0.012292 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
