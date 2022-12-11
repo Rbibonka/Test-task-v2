@@ -4,7 +4,7 @@ namespace Game
 {
     namespace Play
     {
-        public class LevelParameters : MonoBehaviour
+        public class LevelParameters : MonoBehaviour, ICustomizable
         {
             [Header("Configuration options")]
             [SerializeField]

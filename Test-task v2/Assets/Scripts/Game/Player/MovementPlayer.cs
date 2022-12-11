@@ -8,7 +8,7 @@ namespace Game
         [RequireComponent(typeof(Rigidbody))]
         [RequireComponent(typeof(MeshCollider))]
         [RequireComponent(typeof(PlayerParameters))]
-        public class MovementPlayer : Player
+        public class MovementPlayer : Player, IMovable
         {
             [Header("Parameters player")]
             [Range(0, 3)]

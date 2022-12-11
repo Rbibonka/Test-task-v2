@@ -4,7 +4,7 @@ namespace Game
 {
     namespace Play
     {
-        public class GameStatistics : Statistics
+        public class GameStatistics : Statistics, IStatistic
         {
             private MovementPlayer[] players;
 

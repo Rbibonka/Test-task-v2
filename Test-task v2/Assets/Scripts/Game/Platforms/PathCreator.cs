@@ -6,7 +6,7 @@ namespace Game
 {
     namespace Play
     {
-        public class PathCreator : MonoBehaviour
+        public class PathCreator : MonoBehaviour, IBuilder
         {
             [Header("Game objects")]
             

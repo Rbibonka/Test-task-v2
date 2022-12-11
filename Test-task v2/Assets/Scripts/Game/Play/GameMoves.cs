@@ -5,11 +5,14 @@ namespace Game
 {
     namespace Play
     {
-        public class GameMoves : MonoBehaviour
+        [RequireComponent(typeof(GameStatistics))]
+        public class GameMoves : MonoBehaviour, IGameMovable
         {
+            [Header("Position")]
             [SerializeField]
             private Transform wheelPoint;
 
+            [Header("Support script")]
             [SerializeField]
             private SpinWheel spinWheel;
 

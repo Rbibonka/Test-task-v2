@@ -8,7 +8,7 @@ namespace Game
     namespace Play
     {
         [RequireComponent(typeof(Rigidbody))]
-        public class SpinWheel : Wheel
+        public class SpinWheel : Wheel, IRotating
         {
             [Range(0, 10)]
             [SerializeField]
@@ -80,7 +80,7 @@ namespace Game
             {
                 wheelBody.angularDrag = Random.Range(minAngularDrag, maxAngularDrag);
 
-                rotateSpeed = Random.Range(-100, 100);
+                rotateSpeed = Random.Range(-200, 200);
 
                 currentStateWheel = CurrentStateWheel.rotate;
             }

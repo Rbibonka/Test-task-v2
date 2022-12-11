@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SideValue : MonoBehaviour
+public class SideValue : MonoBehaviour, ISideValue
 {
     [SerializeField]
     private int sideValue;

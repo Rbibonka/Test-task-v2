@@ -16,9 +16,14 @@ namespace Game
                 GlobalUIEventManager.OnButtonSpinWheelClick?.Invoke();
             }
 
+            public void OnButtonContinueClick()
+            {
+                GlobalUIEventManager.OnButtonContinueClick?.Invoke();
+            }
+
             public void OnButtonPauseClick()
             {
-                GlobalUIEventManager.OnButtonSpinWheelClick?.Invoke();
+                GlobalUIEventManager.OnButtonPauseClick?.Invoke();
             }
 
             public void OnButtonBackClick()

@@ -13,11 +13,35 @@ namespace Game
             [SerializeField]
             private Canvas endGameCanvas;
 
+            [SerializeField]
+            private Canvas pauseCanvas;
+
             private void OnEnable()
             {
-                GlobalEventManager.OnPathBuilt += ActivateGameCanvas;
+                GlobalEventManager.OnPathBuilt += StartGame;
 
                 GlobalEventManager.OnEndGame += EndGame;
+
+                GlobalUIEventManager.OnButtonPauseClick += PauseGame;
+
+                GlobalUIEventManager.OnButtonContinueClick += ContinueGame;
+            }
+
+            private void ContinueGame()
+            {
+                PausePanelStateChanges();
+            }
+
+            private void PausePanelStateChanges()
+            {
+                gameCanvas.enabled = !gameCanvas.enabled;
+
+                pauseCanvas.enabled = !pauseCanvas.enabled;
+            }
+
+            private void PauseGame()
+            {
+                PausePanelStateChanges();
             }
 
             private void EndGame()
@@ -27,16 +51,21 @@ namespace Game
                 endGameCanvas.enabled = true;
             }
 
-            private void ActivateGameCanvas()
+            private void StartGame()
             {
                 gameCanvas.enabled = true;
             }
 
             private void OnDisable()
             {
-                GlobalEventManager.OnPathBuilt -= ActivateGameCanvas;
+                GlobalEventManager.OnPathBuilt -= StartGame;
 
                 GlobalEventManager.OnEndGame -= EndGame;
+
+                GlobalUIEventManager.OnButtonPauseClick -= PauseGame;
+
+                GlobalUIEventManager.OnButtonContinueClick -= ContinueGame;
+
             }
         }
     }

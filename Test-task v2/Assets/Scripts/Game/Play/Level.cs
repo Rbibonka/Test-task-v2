@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -26,6 +27,13 @@ namespace Game
                 GlobalEventManager.OnStartGame += BuildPath;
 
                 GlobalEventManager.OnPathBuilt += SpawnPlayer;
+
+                GlobalUIEventManager.OnButtonBackClick += OpenMenu;
+            }
+
+            private void OpenMenu()
+            {
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
             }
 
             private void BuildPath()
@@ -50,6 +58,8 @@ namespace Game
                 GlobalEventManager.OnStartGame -= BuildPath;
 
                 GlobalEventManager.OnPathBuilt -= SpawnPlayer;
+
+                GlobalUIEventManager.OnButtonBackClick -= OpenMenu;
             }
         }
     }
