@@ -1,10 +1,18 @@
 using UnityEngine;
 using System;
 
-public class GlobalUIEventManager : MonoBehaviour
+namespace Game
 {
-    public static Action OnButtonStartClick;
-    public static Action OnButtonRollDiceClick;
-    public static Action<string, int> OnChangePlayer;
-    public static Action<int> OnChangeNumberFromWheel;
+    namespace Play
+    {
+        public class GlobalUIEventManager : MonoBehaviour
+        {
+            public static Action OnButtonStartClick;
+            public static Action OnButtonSpinWheelClick;
+            public static Action OnButtonPauseClick;
+            public static Action OnButtonBackClick;
+            public static Action<string, int> OnChangePlayer;
+            public static Action<int> OnChangeNumberFromWheel;
+        }
+    }
 }

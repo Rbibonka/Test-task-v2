@@ -15,13 +15,11 @@ namespace Game
 
             private MovementPlayer[] movementPlayer;
 
-            private int[] finishers;
+            private MovementPlayer[] finishers;
 
-            private int numberFinishers;
+            private GameStatistics gameStatistics;
 
-            private bool somePlayerFinished;
-
-            private bool playerAdded;
+            private int quantityFinishers;
 
             private bool endMove;
 
@@ -37,7 +35,12 @@ namespace Game
 
             private void OnEnable()
             {
-                GlobalUIEventManager.OnButtonRollDiceClick += StartSpin;
+                GlobalUIEventManager.OnButtonSpinWheelClick += StartSpin;
+            }
+
+            private void Start()
+            {
+                gameStatistics = GetComponent<GameStatistics>();
             }
 
             private void StartSpin()
@@ -56,7 +59,7 @@ namespace Game
             {
                 movementPlayer = new MovementPlayer[players.Length];
 
-                finishers = new int[players.Length];
+                finishers = new MovementPlayer[players.Length];
 
                 for (int i = 0; i < players.Length; i++)
                 {
@@ -90,18 +93,18 @@ namespace Game
                     {
                         do
                         {
+                            moveStatus = MoveStatus.finishMove;
+
+                            endMove = false;
+
+                            currentStateWheel = SpinWheel.CurrentStateWheel.idle;
+
                             if (movementPlayer[i].GetPlayerFinished)
                             {
                                 break;
                             }
                             else
                             {
-                                moveStatus = MoveStatus.finishMove;
-
-                                endMove = false;
-
-                                currentStateWheel = SpinWheel.CurrentStateWheel.idle;
-
                                 GlobalUIEventManager.OnChangePlayer?.Invoke(movementPlayer[i].GetPlayerParameters.GetPlayerName, movementPlayer[i].GetCurrentPlatform);
 
                                 GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
@@ -121,21 +124,34 @@ namespace Game
                                 movementPlayer[i].Move(spinWheel.GetQuantityMoves);
 
                                 yield return new WaitUntil(() => endMove == true);
+
+                                if (movementPlayer[i].GetPlayerFinished)
+                                {
+                                    finishers[quantityFinishers] = movementPlayer[i];
+
+                                    quantityFinishers++;
+
+                                    break;
+                                }
                             }
 
                         } while (moveStatus == MoveStatus.repeatMove);
                     }
+
+                    if (quantityFinishers >= movementPlayer.Length)
+                    {
+                        break;
+                    }
                 }
-            }
 
-            private void AddedFinisher()
-            {
+                gameStatistics.SetStatistics(finishers);
 
+                GlobalEventManager.OnEndGame?.Invoke();
             }
 
             private void OnDisable()
             {
-                GlobalUIEventManager.OnButtonRollDiceClick -= StartSpin;
+                GlobalUIEventManager.OnButtonSpinWheelClick -= StartSpin;
             }
         }
     }

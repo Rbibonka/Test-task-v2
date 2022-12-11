@@ -35,13 +35,15 @@ namespace Game
             [SerializeField]
             private LevelParameters levelParameters;
 
+            private MeshCollider meshCollider;
+
             private PlayerParameters playerParameters;
 
             private Transform[] platforms;
 
             private float minDistance = 0.001f;
 
-            private bool playerFinished;
+            private bool playerFinished = false;
 
             public enum PlayerState
             {
@@ -95,6 +97,8 @@ namespace Game
             private void OnEnable()
             {
                 playerParameters = GetComponent<PlayerParameters>();
+
+                meshCollider = GetComponent<MeshCollider>();
             }
 
             public void SetPlatforms()
@@ -104,9 +108,11 @@ namespace Game
 
             public void Move(int quantityMoves)
             {
+                meshCollider.enabled = true;
+
                 finishPlatform = currentPlatform + quantityMoves;
 
-                if (finishPlatform > platforms.Length)
+                if (finishPlatform >= platforms.Length)
                 {
                     finishPlatform = platforms.Length - 1;
                 }
@@ -184,13 +190,15 @@ namespace Game
 
             private void SetPlayerStatistick()
             {
-                playerParameters.SetPlayerStatistics(playerReceivedBonus, playerReceivedPenalty, playerMoves);
+                playerParameters.SetStatistics(playerReceivedBonus, playerReceivedPenalty, playerMoves);
             }
 
             private void OnTriggerStay(Collider other)
             {
                 if (playerState == PlayerState.landed)
                 {
+                    meshCollider.enabled = false;
+
                     playerState = PlayerState.idle;
 
                     if (other.TryGetComponent(out DefaultPlatform defaultPlatform))
@@ -212,6 +220,10 @@ namespace Game
                         playerMoves++;
 
                         gameMoves.RepeatPlayerMove();
+                    }
+                    else
+                    {
+                        Debug.Log("Платформа не найдена!");
                     }
                 }
             }

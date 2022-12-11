@@ -1,5 +1,12 @@
 using UnityEngine;
 
-public class BonusPlatform : MonoBehaviour
+namespace Game
 {
+    namespace Play
+    {
+        public class BonusPlatform : MonoBehaviour
+        {
+        }
+    }
 }
+

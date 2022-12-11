@@ -1,14 +1,31 @@
 using UnityEngine;
 
-public class ClickButtonHandler : MonoBehaviour
+namespace Game
 {
-    public void OnButtonStartClick()
+    namespace Play
     {
-        GlobalUIEventManager.OnButtonStartClick?.Invoke();
-    }
+        public class ClickButtonHandler : MonoBehaviour
+        {
+            public void OnButtonStartClick()
+            {
+                GlobalUIEventManager.OnButtonStartClick?.Invoke();
+            }
 
-    public void OnButtonRollDiceClick()
-    {
-        GlobalUIEventManager.OnButtonRollDiceClick?.Invoke();
+            public void OnButtonSpinWheelClick()
+            {
+                GlobalUIEventManager.OnButtonSpinWheelClick?.Invoke();
+            }
+
+            public void OnButtonPauseClick()
+            {
+                GlobalUIEventManager.OnButtonSpinWheelClick?.Invoke();
+            }
+
+            public void OnButtonBackClick()
+            {
+                GlobalUIEventManager.OnButtonBackClick?.Invoke();
+            }
+        }
     }
 }
+

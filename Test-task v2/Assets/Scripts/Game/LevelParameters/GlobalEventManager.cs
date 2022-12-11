@@ -12,6 +12,7 @@ namespace Game
             public static Action OnPlayerActivated;
             public static Action OnPathBuilt;
             public static Action OnStartGame;
+            public static Action OnEndGame;
         }
     }
 }

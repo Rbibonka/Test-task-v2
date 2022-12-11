@@ -30,7 +30,7 @@ namespace Game
 
             private Transform[] spawnPoitns;
 
-            private int firstPossibleSpecialPlatfrom;
+            private int firstPossibleSpecialPlatfrom = 4;
 
             private int[] specialPlfatforms;
 

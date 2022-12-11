@@ -10,9 +10,21 @@ namespace Game
             [SerializeField]
             private Canvas gameCanvas;
 
+            [SerializeField]
+            private Canvas endGameCanvas;
+
             private void OnEnable()
             {
                 GlobalEventManager.OnPathBuilt += ActivateGameCanvas;
+
+                GlobalEventManager.OnEndGame += EndGame;
+            }
+
+            private void EndGame()
+            {
+                gameCanvas.enabled = false;
+
+                endGameCanvas.enabled = true;
             }
 
             private void ActivateGameCanvas()
@@ -23,6 +35,8 @@ namespace Game
             private void OnDisable()
             {
                 GlobalEventManager.OnPathBuilt -= ActivateGameCanvas;
+
+                GlobalEventManager.OnEndGame -= EndGame;
             }
         }
     }

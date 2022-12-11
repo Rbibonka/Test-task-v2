@@ -85,7 +85,7 @@ namespace Game
                 currentStateWheel = CurrentStateWheel.rotate;
             }
 
-            private void Update()
+            private void FixedUpdate()
             {
                 if (currentStateWheel == CurrentStateWheel.idle)
                 {

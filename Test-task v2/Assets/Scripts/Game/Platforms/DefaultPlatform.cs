@@ -1,5 +1,11 @@
 using UnityEngine;
 
-public class DefaultPlatform : MonoBehaviour
+namespace Game
 {
+    namespace Play
+    {
+        public class DefaultPlatform : MonoBehaviour
+        {
+        }
+    }
 }

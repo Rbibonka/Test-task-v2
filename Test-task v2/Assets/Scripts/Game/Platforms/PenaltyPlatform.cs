@@ -1,5 +1,11 @@
 using UnityEngine;
 
-public class PenaltyPlatform : MonoBehaviour
+namespace Game
 {
+    namespace Play
+    {
+        public class PenaltyPlatform : MonoBehaviour
+        {
+        }
+    }
 }

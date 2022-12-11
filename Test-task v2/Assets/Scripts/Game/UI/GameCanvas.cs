@@ -17,6 +17,9 @@ namespace Game
             [SerializeField]
             private Text currentPlayer;
 
+            [SerializeField]
+            private Button spinWheel;
+
             private void OnEnable()
             {
                 GlobalUIEventManager.OnChangePlayer += SetCurrentPlayer;
@@ -29,11 +32,15 @@ namespace Game
                 currentPlayer.text = currentPlayerName;
                 currentPlatform.text = currentPlayerPlatform.ToString();
                 numberFromWheel.text = "";
+
+                spinWheel.enabled = true;
             }
 
             private void SetNumberFromWheel(int number)
             {
                 numberFromWheel.text = number.ToString();
+
+                spinWheel.enabled = false;
             }
 
             private void OnDisable()

@@ -6,7 +6,20 @@ namespace Game
     {
         public class GameStatistics : Statistics
         {
-            
+            private MovementPlayer[] players;
+
+            public MovementPlayer[] GetPlayers
+            {
+                get
+                {
+                    return players;
+                }
+            }
+
+            public void SetStatistics(MovementPlayer[] finishedPlayers)
+            {
+                players = finishedPlayers;
+            }
         }
     }
 }

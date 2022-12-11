@@ -26,7 +26,7 @@ namespace Game
                 }
             }
 
-            public int GetQuantityPlayerReceivedBonus
+            public int GetQuantityReceivedPenalty
             {
                 get
                 {
@@ -61,7 +61,7 @@ namespace Game
                 playerText.color = randomColor;
             }
 
-            public void SetPlayerStatistics(int quantityReceivedBonus, int quantityReceivedPenalty, int quantityMoves)
+            public void SetStatistics(int quantityReceivedBonus, int quantityReceivedPenalty, int quantityMoves)
             {
                 quantityPlayerReceivedBonus = quantityReceivedBonus;
 
