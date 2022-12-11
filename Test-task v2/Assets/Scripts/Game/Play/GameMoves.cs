@@ -8,6 +8,9 @@ namespace Game
         [RequireComponent(typeof(GameStatistics))]
         public class GameMoves : MonoBehaviour, IGameMovable
         {
+            [SerializeField]
+            private float timeWaitCamera;
+
             [Header("Position")]
             [SerializeField]
             private Transform wheelPoint;
@@ -122,7 +125,7 @@ namespace Game
 
                                 GlobalEventManager.OnChangedTrackingTarget?.Invoke(movementPlayer[i].transform, movementPlayer[i].GetDistanceFromPlayer);
 
-                                yield return new WaitForSeconds(2f);
+                                yield return new WaitForSeconds(timeWaitCamera);
 
                                 movementPlayer[i].Move(spinWheel.GetQuantityMoves);
 

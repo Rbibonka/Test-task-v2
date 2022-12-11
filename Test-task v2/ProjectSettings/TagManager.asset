@@ -10,6 +10,7 @@ TagManager:
   - Point
   - Start
   - Wheel
+  - Decorating
   layers:
   - Default
   - TransparentFX

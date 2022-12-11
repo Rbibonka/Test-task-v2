@@ -10,6 +10,7 @@ namespace Game
         [RequireComponent(typeof(Rigidbody))]
         public class SpinWheel : Wheel, IRotating
         {
+            [Header("Parameters")]
             [Range(0, 10)]
             [SerializeField]
             private float defaultSpeed;
@@ -25,6 +26,7 @@ namespace Game
             [SerializeField]
             private Vector3 distanceFromWheel;
 
+            [Header("Game objects")]
             [SerializeField]
             private GameObject[] numberPoints;
 

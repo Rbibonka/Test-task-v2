@@ -52,26 +52,33 @@ namespace Game
                     }
                     else
                     {
-                        if (quantityPlayers > 0 && quantitySpecialPlatforms >= 0)
+                        if (quantityPlayers <= levelParameters.GetPlayers.Length)
                         {
-                            if (quantitySpecialPlatforms < quantityPlatforms - firstPossibleSpecialPlatfrom)
+                            if (quantityPlayers > 0 && quantitySpecialPlatforms >= 0)
                             {
-                                panelAnimator.SetTrigger("Close");
+                                if (quantitySpecialPlatforms < quantityPlatforms - firstPossibleSpecialPlatfrom)
+                                {
+                                    panelAnimator.SetTrigger("Close");
 
-                                levelParameters.ChangeQuantityPalyers(quantityPlayers);
+                                    levelParameters.ChangeQuantityPalyers(quantityPlayers);
 
-                                levelParameters.ChangeQuantitySpecialPlatforms(quantitySpecialPlatforms);
+                                    levelParameters.ChangeQuantitySpecialPlatforms(quantitySpecialPlatforms);
 
-                                GlobalEventManager.OnStartGame?.Invoke();
+                                    GlobalEventManager.OnStartGame?.Invoke();
+                                }
+                                else
+                                {
+                                    Debug.Log("Специальных камней больше чем камней всего!");
+                                }
                             }
                             else
                             {
-                                Debug.Log("Специальных камней больше чем камней всего!");
+                                Debug.Log("Игроков или препятствий не может быть меньше 0!");
                             }
                         }
                         else
                         {
-                            Debug.Log("Игроков или препятствий не может быть меньше 0!");
+                            Debug.Log("Слишком много игроков!");
                         }
                     }
                 }
