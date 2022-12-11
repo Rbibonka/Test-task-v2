@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -82,7 +80,16 @@ namespace Game
             {
                 wheelBody.angularDrag = Random.Range(minAngularDrag, maxAngularDrag);
 
-                rotateSpeed = Random.Range(-200, 200);
+                int sideRotate = Random.Range(0, 1);
+
+                if (sideRotate == 1)
+                {
+                    rotateSpeed = 200;
+                }
+                else
+                {
+                    rotateSpeed = -200;
+                }
 
                 currentStateWheel = CurrentStateWheel.rotate;
             }
