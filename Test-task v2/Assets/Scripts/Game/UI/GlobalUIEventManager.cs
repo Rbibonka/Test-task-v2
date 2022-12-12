@@ -12,8 +12,8 @@ namespace Game
             public static Action OnButtonPauseClick;
             public static Action OnButtonContinueClick;
             public static Action OnButtonBackClick;
-            public static Action<string, int> OnChangePlayer;
-            public static Action<int> OnChangeNumberFromWheel;
+            public static Action<string, int> OnChangedPlayer;
+            public static Action<int> OnChangedNumberFromWheel;
         }
     }
 }

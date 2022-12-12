@@ -9,8 +9,6 @@ namespace Game
         public class PathCreator : MonoBehaviour, IBuilder
         {
             [Header("Game objects")]
-            
-
             [SerializeField]
             private GameObject simplePlatform;
 

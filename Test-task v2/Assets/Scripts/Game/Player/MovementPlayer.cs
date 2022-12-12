@@ -133,22 +133,27 @@ namespace Game
             {
                 if (playerState == PlayerState.moving)
                 {
-                    if (Vector3.Distance(movePoint.position, platforms[finishPlatform].position) < minDistance)
-                    {
-                        playerState = PlayerState.landed;
-                    }
-                    else
-                    {
-                        movePoint.position = Vector3.MoveTowards(movePoint.position, platforms[currentPlatform].position, playerSpeed * Time.deltaTime);
+                    Moving();
+                }
+            }
 
-                        if (moveDirection == MoveDirection.forward)
-                        {
-                            PlayerMovingForward();
-                        }
-                        else if (moveDirection == MoveDirection.back)
-                        {
-                            PlayerMovingBack();
-                        }
+            protected override void Moving()
+            {
+                if (Vector3.Distance(movePoint.position, platforms[finishPlatform].position) < minDistance)
+                {
+                    playerState = PlayerState.landed;
+                }
+                else
+                {
+                    movePoint.position = Vector3.MoveTowards(movePoint.position, platforms[currentPlatform].position, playerSpeed * Time.deltaTime);
+
+                    if (moveDirection == MoveDirection.forward)
+                    {
+                        PlayerMovingForward();
+                    }
+                    else if (moveDirection == MoveDirection.back)
+                    {
+                        PlayerMovingBack();
                     }
                 }
             }
@@ -188,7 +193,7 @@ namespace Game
                 Move(levelParameters.GetPenaltyNumberPlatforms);
             }
 
-            private void SetPlayerStatistick()
+            protected override void SetPlayerStatistick()
             {
                 playerParameters.SetStatistics(playerReceivedBonus, playerReceivedPenalty, playerMoves);
             }

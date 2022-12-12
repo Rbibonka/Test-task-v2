@@ -91,6 +91,20 @@ namespace Game
                 endMove = true;
             }
 
+            private void WaitStartSpin(int numberPlayer)
+            {
+                GlobalUIEventManager.OnChangedPlayer?.Invoke(movementPlayer[numberPlayer].GetPlayerParameters.GetPlayerName, movementPlayer[numberPlayer].GetCurrentPlatform);
+
+                GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
+            }
+
+            private void PreparationPlayerMove(int numberPlayer)
+            {
+                GlobalUIEventManager.OnChangedNumberFromWheel?.Invoke(spinWheel.GetQuantityMoves);
+
+                GlobalEventManager.OnChangedTrackingTarget?.Invoke(movementPlayer[numberPlayer].transform, movementPlayer[numberPlayer].GetDistanceFromPlayer);
+            }
+
             private IEnumerator Gameplay()
             {
                 while (true)
@@ -111,9 +125,7 @@ namespace Game
                             }
                             else
                             {
-                                GlobalUIEventManager.OnChangePlayer?.Invoke(movementPlayer[i].GetPlayerParameters.GetPlayerName, movementPlayer[i].GetCurrentPlatform);
-
-                                GlobalEventManager.OnChangedTrackingTarget?.Invoke(wheelPoint, spinWheel.GetDistanceFromWheel);
+                                WaitStartSpin(i);
 
                                 yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.rotate);
 
@@ -121,9 +133,7 @@ namespace Game
 
                                 yield return new WaitUntil(() => currentStateWheel == SpinWheel.CurrentStateWheel.stopped);
 
-                                GlobalUIEventManager.OnChangeNumberFromWheel?.Invoke(spinWheel.GetQuantityMoves);
-
-                                GlobalEventManager.OnChangedTrackingTarget?.Invoke(movementPlayer[i].transform, movementPlayer[i].GetDistanceFromPlayer);
+                                PreparationPlayerMove(i);
 
                                 yield return new WaitForSeconds(timeWaitCamera);
 

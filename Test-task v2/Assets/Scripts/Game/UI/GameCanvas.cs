@@ -22,9 +22,9 @@ namespace Game
 
             private void OnEnable()
             {
-                GlobalUIEventManager.OnChangePlayer += SetCurrentPlayer;
+                GlobalUIEventManager.OnChangedPlayer += SetCurrentPlayer;
 
-                GlobalUIEventManager.OnChangeNumberFromWheel += SetNumberFromWheel;
+                GlobalUIEventManager.OnChangedNumberFromWheel += SetNumberFromWheel;
             }
 
             private void SetCurrentPlayer(string currentPlayerName, int currentPlayerPlatform)
@@ -45,9 +45,9 @@ namespace Game
 
             private void OnDisable()
             {
-                GlobalUIEventManager.OnChangePlayer -= SetCurrentPlayer;
+                GlobalUIEventManager.OnChangedPlayer -= SetCurrentPlayer;
 
-                GlobalUIEventManager.OnChangeNumberFromWheel -= SetNumberFromWheel;
+                GlobalUIEventManager.OnChangedNumberFromWheel -= SetNumberFromWheel;
             }
         }
     }

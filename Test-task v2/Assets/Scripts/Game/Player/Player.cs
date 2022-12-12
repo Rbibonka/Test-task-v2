@@ -15,6 +15,10 @@ namespace Game
             protected abstract void PlayerMovingForward();
 
             protected abstract void PlayerMovingBack();
+
+            protected abstract void Moving();
+
+            protected abstract void SetPlayerStatistick();
         }
     }
 }
